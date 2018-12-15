@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "1013731614296",
+    "firebase_url": "https://motelbooking-85870.firebaseio.com",
+    "project_id": "motelbooking-85870",
+    "storage_bucket": "motelbooking-85870.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013731614296:android:e1b9f94c24a48e26",
+        "android_client_info": {
+          "package_name": "com.example.user1801.onlinemotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013731614296-b5eeqr5bu13up5r7pcl4qcdqfubn63a3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.user1801.onlinemotel",
+            "certificate_hash": "e32d31eb177adc744900b33b02471360d06efa7f"
+          }
+        },
+        {
+          "client_id": "1013731614296-a9ourmtbmfp9dof8nqdqvt3u0eth29ar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzlhwmuYjXqOS43pgR6cHBme5CDJ0V_zU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013731614296-a9ourmtbmfp9dof8nqdqvt3u0eth29ar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013731614296:android:28f6f30ca86d4fc8",
+        "android_client_info": {
+          "package_name": "com.example.xo337.onlinemotel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013731614296-pdfs0hgvrdfvv6i98qqqr808m2u3hp1g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.xo337.onlinemotel",
+            "certificate_hash": "e32d31eb177adc744900b33b02471360d06efa7f"
+          }
+        },
+        {
+          "client_id": "1013731614296-a9ourmtbmfp9dof8nqdqvt3u0eth29ar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzlhwmuYjXqOS43pgR6cHBme5CDJ0V_zU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1013731614296-a9ourmtbmfp9dof8nqdqvt3u0eth29ar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

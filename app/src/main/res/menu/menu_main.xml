@@ -1,0 +1,38 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.user1801.onlinemotel.MainActivity">
+    <item
+        android:icon="@drawable/ic_keyboard_arrow_down_black_24dp"
+        android:title="Item"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/action_myroom"
+                android:icon="@drawable/ic_hotel_black_24dp"
+                android:title="Room" />
+            <item
+                android:id="@+id/action_share"
+                android:icon="@drawable/ic_share_black_24dp"
+                android:title="action_Share"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/action_settings"
+                android:icon="@drawable/ic_settings_black_24dp"
+                android:title="@string/action_settings">
+                <menu>
+                    <item
+                        android:id="@+id/action_account"
+                        android:icon="@drawable/ic_person_black_24dp"
+                        android:title="Account"
+                        app:showAsAction="never" />
+                    <item
+                        android:id="@+id/action_logout"
+                        android:icon="@drawable/ic_directions_run_black_24dp"
+                        android:title="Logout"
+                        app:showAsAction="never" />
+                </menu>
+            </item>
+        </menu>
+    </item>
+</menu>
