@@ -3,6 +3,7 @@ package com.example.user1801.onlinemotel;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.example.user1801.onlinemotel.recyclerDesign.JavaBeanAllRoomList;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,14 +30,14 @@ public class MyRoom extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    new AlertDialog.Builder(MyRoom.this).setMessage(R.string.title_home).show();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    new AlertDialog.Builder(MyRoom.this).setMessage(R.string.title_door_key).show();
                     return true;
-                case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
-                    return true;
+//                case R.id.navigation_notifications:
+//                    new AlertDialog.Builder(MyRoom.this).setMessage(R.string.title_notifications).show();
+//                    return true;
             }
             return false;
         }
@@ -50,11 +52,13 @@ public class MyRoom extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        String roomName = getIntent().getStringExtra("ROOMNAME");
-        String roomAddress= getIntent().getStringExtra("ROOMADDRESS");
-        String roomPeople= getIntent().getStringExtra("ROOMPEOPLE");
-        String roomMoney= getIntent().getStringExtra("ROOMMONEY");
-        if (TextUtils.isEmpty(roomName) || TextUtils.isEmpty(roomAddress) || TextUtils.isEmpty(roomPeople) || TextUtils.isEmpty(roomMoney)) {
+        String roomName = getIntent().getStringExtra("ROOM_NAME");
+        String roomAddress= getIntent().getStringExtra("ROOM_ADDRESS");
+        String roomPeople= getIntent().getStringExtra("ROOM_PEOPLE");
+        String roomMoney= getIntent().getStringExtra("ROOM_MONEY");
+        String roomCheckIn= getIntent().getStringExtra("ROOM_CHECK_IN");
+        String roomCheckOut= getIntent().getStringExtra("ROOM_CHECK_OUT");
+        if (TextUtils.isEmpty(roomName) || TextUtils.isEmpty(roomAddress) || TextUtils.isEmpty(roomPeople) || TextUtils.isEmpty(roomMoney) || TextUtils.isEmpty(roomCheckIn) || TextUtils.isEmpty(roomCheckOut)) {
             this.finish();
             return;
         }
@@ -68,32 +72,6 @@ public class MyRoom extends AppCompatActivity {
         textAddress.setText(roomAddress);
         textPeople.setText(roomPeople);
         textMoney.setText(roomMoney);
-
-        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        SimpleDateFormat timeYear = new SimpleDateFormat("yyyy/MM/dd");
-
-        SimpleDateFormat timeWeek = new SimpleDateFormat("E");//星期
-        SimpleDateFormat timePart = new SimpleDateFormat("a");//時段
-        Date date = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.add(Calendar.DAY_OF_YEAR,+1);
-        Date date1= calendar.getTime();
-        String time = timeFormat.format(date)+"："+timeWeek.format(date) +"："+ timePart.format(date)+"\n"+ timeFormat.format(date1);
-        textTime.setText(time);
-
-        CalendarView calendarView = findViewById(R.id.calendarView);
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-
-                String date = i + "年" + (i1 + 1) + "月" + i2 + "日";
-//                String date2 = i + "/" + (i1 + 1) + "/" + i2;
-
-                Log.i("TEST", "date: [" + date +"]");
-            }
-        });
-
+        textTime.setText(roomCheckIn +" ~ "+ roomCheckOut);
     }
-
 }

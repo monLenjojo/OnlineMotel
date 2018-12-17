@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class RecyclerFunctionMyRoomList {
-    ArrayList<JavaBeanAllRoomList> arrayList = new ArrayList<>();
+    ArrayList<JavaBeanMyRoom> arrayList = new ArrayList<>();
     Context context;
     RecyclerView recyclerView;
     DatabaseReference data;
@@ -26,7 +26,7 @@ public class RecyclerFunctionMyRoomList {
         data.child("myRoomList").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                JavaBeanAllRoomList data = dataSnapshot.getValue(JavaBeanAllRoomList.class);
+                JavaBeanMyRoom data = dataSnapshot.getValue(JavaBeanMyRoom.class);
                 arrayList.add(data);
                 upData();
             }

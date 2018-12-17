@@ -46,16 +46,16 @@ public class MainActivity extends AppCompatActivity {
         new RecyclerFunctionHomePage(this,recyclerHomeView,auth.getUid());
 
     }
-FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
-    @Override
-    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        if (firebaseAuth.getCurrentUser()==null) {
-            Intent page = new Intent(MainActivity.this,LogInActivity.class);
-            startActivity(page);
-            MainActivity.this.finish();
+    FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+        @Override
+        public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+            if (firebaseAuth.getCurrentUser()==null) {
+                Intent page = new Intent(MainActivity.this,LogInActivity.class);
+                startActivity(page);
+                MainActivity.this.finish();
+            }
         }
-    }
-};
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
