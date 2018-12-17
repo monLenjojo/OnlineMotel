@@ -3,14 +3,14 @@ package com.example.user1801.onlinemotel.recyclerDesign;
 public class JavaBeanAllRoomList {
     String where;
     String roomNmae;
-    int money;
-    int people;
+    String money;
+    String people;
 
     public JavaBeanAllRoomList() {
         super();
     }
 
-    public JavaBeanAllRoomList(String where, String roomNmae, int money, int people) {
+    public JavaBeanAllRoomList(String where, String roomNmae, String money, String people) {
         this.where = where;
         this.roomNmae = roomNmae;
         this.money = money;
@@ -33,19 +33,19 @@ public class JavaBeanAllRoomList {
         this.roomNmae = roomNmae;
     }
 
-    public int getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 
-    public int getPeople() {
+    public String getPeople() {
         return people;
     }
 
-    public void setPeople(int people) {
+    public void setPeople(String people) {
         this.people = people;
     }
 }

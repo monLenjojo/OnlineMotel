@@ -1,16 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.user1801.onlinemotel.MainActivity">
+    tools:context="com.example.user1801.onlinemotel.MyRoomList">
     <item
         android:icon="@drawable/ic_keyboard_arrow_down_black_24dp"
         android:title="Item"
         app:showAsAction="always">
         <menu>
             <item
-                android:id="@+id/action_myroom_list"
-                android:icon="@drawable/ic_hotel_black_24dp"
-                android:title="Room" />
+                android:id="@+id/action_homePage"
+                android:icon="@drawable/ic_arrow_back_black_24dp"
+                android:title="HomePage" />
             <item
                 android:id="@+id/action_share"
                 android:icon="@drawable/ic_share_black_24dp"

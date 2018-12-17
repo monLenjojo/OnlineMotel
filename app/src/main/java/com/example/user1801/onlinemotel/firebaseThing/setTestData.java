@@ -9,7 +9,7 @@ public class setTestData {
         super();
     }
 
-    public void addNewTestData(int startNum, int endNum, int money, int people) {
+    public void addNewTestData(int startNum, int endNum, String money, String people) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("allRoomList");
         for (int i = startNum; i <= endNum; i++) {
             JavaBeanAllRoomList data = new JavaBeanAllRoomList("高雄市愛情摩天輪路之" + Integer.toString(i),
