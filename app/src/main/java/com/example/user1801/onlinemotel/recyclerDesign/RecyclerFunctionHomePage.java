@@ -33,7 +33,7 @@ public class RecyclerFunctionHomePage {
                 Log.d("TEST", dataSnapshot.getValue().toString());
                 JavaBeanAllRoomList data = dataSnapshot.getValue(JavaBeanAllRoomList.class);
                 arrayList.add(data);
-                Log.d("TEST", data.roomNmae);
+                Log.d("TEST", data.roomName);
                 upData();
             }
 
@@ -42,10 +42,10 @@ public class RecyclerFunctionHomePage {
                 Log.d("TEST",dataSnapshot.getValue().toString());
                 JavaBeanAllRoomList data = dataSnapshot.getValue(JavaBeanAllRoomList.class);
                 if (s==null) {
-                    Log.d("TEST", arrayList.get(0).roomNmae+" ,"+null);
+                    Log.d("TEST", arrayList.get(0).roomName+" ,"+null);
                     arrayList.set(0,data);
                 }else {
-                    Log.d("TEST", arrayList.get(1+Integer.parseInt(s)).roomNmae + " ," + (1+Integer.parseInt(s)));
+                    Log.d("TEST", arrayList.get(1+Integer.parseInt(s)).roomName + " ," + (1+Integer.parseInt(s)));
                     arrayList.set((1+Integer.parseInt(s)),data);
                 }
             }

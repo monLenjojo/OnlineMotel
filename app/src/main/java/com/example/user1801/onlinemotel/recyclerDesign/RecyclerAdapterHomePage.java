@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +47,7 @@ public class RecyclerAdapterHomePage extends RecyclerView.Adapter<RecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
-        recyclerViewHolder.textRoomName.setText(arrayList.get(i).roomNmae);
+        recyclerViewHolder.textRoomName.setText(arrayList.get(i).roomName);
         recyclerViewHolder.textWhere.setText(arrayList.get(i).where);
         recyclerViewHolder.textPeople.setText(arrayList.get(i).people);
         recyclerViewHolder.textMoney.setText(arrayList.get(i).money);
@@ -68,6 +69,7 @@ public class RecyclerAdapterHomePage extends RecyclerView.Adapter<RecyclerAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     AlertDialog.Builder alertDialog =new AlertDialog.Builder(context);
                     LayoutInflater layoutInflater = LayoutInflater.from(context);
                     final View alertDialogView = layoutInflater.inflate(R.layout.alertdialog_calendar_view,null);

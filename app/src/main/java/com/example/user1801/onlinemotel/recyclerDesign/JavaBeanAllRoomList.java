@@ -2,7 +2,7 @@ package com.example.user1801.onlinemotel.recyclerDesign;
 
 public class JavaBeanAllRoomList {
     String where;
-    String roomNmae;
+    String roomName;
     String money;
     String people;
 
@@ -10,9 +10,9 @@ public class JavaBeanAllRoomList {
         super();
     }
 
-    public JavaBeanAllRoomList(String where, String roomNmae, String money, String people) {
+    public JavaBeanAllRoomList(String where, String roomName, String money, String people) {
         this.where = where;
-        this.roomNmae = roomNmae;
+        this.roomName = roomName;
         this.money = money;
         this.people = people;
     }
@@ -25,12 +25,12 @@ public class JavaBeanAllRoomList {
         this.where = where;
     }
 
-    public String getRoomNmae() {
-        return roomNmae;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public void setRoomNmae(String roomNmae) {
-        this.roomNmae = roomNmae;
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
     }
 
     public String getMoney() {
