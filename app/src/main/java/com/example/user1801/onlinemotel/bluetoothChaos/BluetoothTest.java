@@ -183,4 +183,24 @@ public class BluetoothTest {
     public boolean isConnected() {
         return socket != null;
     }
+    public void setSocketNull() {
+        try {
+            if (read != null) {
+                read.close();
+            }
+            if(write !=null){
+                write.close();
+            }
+            if(socket!=null){
+                socket.close();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reSetBluetooth(){
+        adapter.disable();
+        adapter.enable();
+    }
 }

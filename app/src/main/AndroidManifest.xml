@@ -32,7 +32,8 @@
             android:name=".MyRoomList"
             android:label="@string/title_activity_my_room_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".UserInformationActivity"></activity>
+        <activity android:name=".UserInformationActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

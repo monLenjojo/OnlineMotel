@@ -232,6 +232,21 @@ public class UserInformationActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        ImageView ivCode = (ImageView) findViewById(R.id.mQRCodeImg);
+//                BarcodeEncoder encoder = new BarcodeEncoder();
+//                try {
+//                    Bitmap bit = encoder.encodeBitmap(firebaseUid, BarcodeFormat.QR_CODE,
+//                            250, 250);
+//                    ivCode.setImageBitmap(bit);
+//                } catch (WriterException e) {
+//                    e.printStackTrace();
+//                }
+//        compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    }
+
     private void setViewListener() {
         ed_Name.setOnClickListener(clickListener_changeButton);
         ed_Phone.setOnClickListener(clickListener_changeButton);
@@ -250,6 +265,7 @@ public class UserInformationActivity extends AppCompatActivity {
         ed_Phone = findViewById(R.id.change_Phone);
         ed_Address = findViewById(R.id.change_Address);
         ed_Email = findViewById(R.id.change_Email);
+
     }
 
     @Override

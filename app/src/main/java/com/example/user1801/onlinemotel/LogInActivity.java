@@ -43,6 +43,7 @@ public class LogInActivity extends AppCompatActivity {
                 if (firebaseAuth.getCurrentUser()!=null) {
                     Intent page = new Intent(LogInActivity.this,MainActivity.class);
                     startActivity(page);
+                    LogInActivity.this.finish();
                 }
                 if (tryLogInState) {
                     changeView(false);
@@ -82,22 +83,26 @@ public class LogInActivity extends AppCompatActivity {
                                     .setPositiveButton("是", new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
-                                            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                                @Override
-                                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                                    if (task.isComplete()) {
-                                                        if (!task.isSuccessful()) {
-                                                            new AlertDialog.Builder(LogInActivity.this).setMessage("帳號建立失敗").show();
-                                                            changeView(false);
-                                                        }else {
-                                                            Toast.makeText(LogInActivity.this, "自動登入中，請稍後", Toast.LENGTH_SHORT).show();
-                                                            changeView(true);
-                                                        }
-                                                    }
-                                                }
-                                            });
+//                                            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                                                @Override
+//                                                public void onComplete(@NonNull Task<AuthResult> task) {
+//                                                    if (task.isComplete()) {
+//                                                        if (!task.isSuccessful()) {
+//                                                            new AlertDialog.Builder(LogInActivity.this).setMessage("帳號建立失敗").show();
+//                                                            changeView(false);
+//                                                        }else {
+//                                                            Toast.makeText(LogInActivity.this, "自動登入中，請稍後", Toast.LENGTH_SHORT).show();
+//                                                            changeView(true);
+//                                                        }
+//                                                    }
+//                                                }
+//                                            });
+                                            Intent registerPage = new Intent(LogInActivity.this,RegisterActivity.class);
+                                            registerPage.putExtra("EMAIL",email);
+                                            registerPage.putExtra("PASSWORD",password);
+                                            startActivity(registerPage);
                                         }
-                                    }).show();
+                                    }).setNegativeButton("否",null).show();
                         }
                     }
                 }

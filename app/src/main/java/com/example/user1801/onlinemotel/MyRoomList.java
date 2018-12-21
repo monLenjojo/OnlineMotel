@@ -40,19 +40,19 @@ public class MyRoomList extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
         switch (id){
             case R.id.action_homePage:
                 Intent page = new Intent(this,MainActivity.class);
                 startActivity(page);
                 MyRoomList.this.finish();
-            case R.id.action_share:
-//                Intent page = new Intent(this,MyRoomList.class);
-//                startActivity(page);
-//                MyRoomList.this.finish();
-                break;
+//            case R.id.action_share:
+////                Intent page = new Intent(this,MyRoomList.class);
+////                startActivity(page);
+////                MyRoomList.this.finish();
+//                break;
             case R.id.action_account:
                 break;
             case R.id.action_logout:

@@ -1,6 +1,7 @@
 package com.example.user1801.onlinemotel;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -8,9 +9,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.example.user1801.onlinemotel.firebaseThing.setTestData;
 import com.example.user1801.onlinemotel.recyclerDesign.RecyclerFunctionHomePage;
@@ -40,12 +43,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
         auth = FirebaseAuth.getInstance();
         auth.addAuthStateListener(authStateListener);
         RecyclerView recyclerHomeView = findViewById(R.id.recyclerHomeView);
         new RecyclerFunctionHomePage(this,recyclerHomeView,auth.getUid());
-
     }
+
     FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
         @Override
         public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -72,18 +80,25 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
         switch (id){
             case R.id.action_myroom_list:
                 Intent pageMyRoomList = new Intent(this,MyRoomList.class);
                 startActivity(pageMyRoomList);
                 break;
-            case R.id.action_share:
-                Intent pageMyRoom = new Intent(this,MyRoom.class);
-                startActivity(pageMyRoom);
-                break;
+//            case R.id.action_share:
+//                ImageView ivCode = (ImageView) findViewById(R.id.mQRCodeImg);
+//                BarcodeEncoder encoder = new BarcodeEncoder();
+//                try {
+//                    Bitmap bit = encoder.encodeBitmap(firebaseUid, BarcodeFormat.QR_CODE,
+//                            250, 250);
+//                    ivCode.setImageBitmap(bit);
+//                } catch (WriterException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
             case R.id.action_account:
                 Intent pageAccount = new Intent(this,UserInformationActivity.class);
                 startActivity(pageAccount);

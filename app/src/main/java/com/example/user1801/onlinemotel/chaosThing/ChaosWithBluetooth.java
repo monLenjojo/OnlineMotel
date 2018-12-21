@@ -113,4 +113,11 @@ public class ChaosWithBluetooth {
             Log.d("ChoasWithBluetooth","findState[0] = " + findState[0]);
         }
     }
+
+    public void reSetBluetooth(){
+        bluetoothTest.reSetBluetooth();
+    }
+    public void setSocketNull(){
+        bluetoothTest.setSocketNull();
+    }
 }
