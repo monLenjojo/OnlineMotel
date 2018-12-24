@@ -9,9 +9,11 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
@@ -22,10 +24,20 @@ import android.widget.TextView;
 import com.example.user1801.onlinemotel.bluetoothChaos.BluetoothTest;
 import com.example.user1801.onlinemotel.chaosThing.ChaosMath;
 import com.example.user1801.onlinemotel.chaosThing.ChaosWithBluetooth;
+import com.example.user1801.onlinemotel.firebaseThing.JavaBeanPower;
 import com.example.user1801.onlinemotel.firebaseThing.ShareRoomPermission;
 import com.example.user1801.onlinemotel.recyclerDesign.JavaBeanMyRoom;
+import com.example.user1801.onlinemotel.recyclerDesign.RecyclerAdapterPassRecord;
+import com.example.user1801.onlinemotel.recyclerDesign.RecyclerFunctionPassRecord;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,7 +59,7 @@ public class MyRoom extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard:
                     netWorkCheck();
-                    chaosWithBluetooth.unlock(textRoomName.getText().toString());
+                    chaosWithBluetooth.unlock(roomItem);
 //                    textTime.post(new Runnable() {
 //                        @Override
 //                        public void run() {
@@ -72,11 +84,14 @@ public class MyRoom extends AppCompatActivity {
         }
     };
 
-    TextView textRoomName,textAddress,textPeople,textMoney,textTime;
+    TextView textRoomName, textAddress, textPeople, textMoney, textTime, textVoltage, textCurrent, textTotalPower;
 
     private ChaosWithBluetooth chaosWithBluetooth;
 
-    String roomName,roomAddress,roomPeople,roomMoney,roomCheckIn,roomCheckOut;
+    String name, roomItem, address, people, money, checkIn, checkOut;
+    RecyclerView recyclerView;
+    private String roomId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,29 +99,98 @@ public class MyRoom extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-         roomName = getIntent().getStringExtra("ROOM_NAME");
-         roomAddress= getIntent().getStringExtra("ROOM_ADDRESS");
-         roomPeople= getIntent().getStringExtra("ROOM_PEOPLE");
-         roomMoney= getIntent().getStringExtra("ROOM_MONEY");
-         roomCheckIn= getIntent().getStringExtra("ROOM_CHECK_IN");
-         roomCheckOut= getIntent().getStringExtra("ROOM_CHECK_OUT");
-        if (TextUtils.isEmpty(roomName) || TextUtils.isEmpty(roomAddress) || TextUtils.isEmpty(roomPeople) || TextUtils.isEmpty(roomMoney) || TextUtils.isEmpty(roomCheckIn) || TextUtils.isEmpty(roomCheckOut)) {
+        name = getIntent().getStringExtra("ROOM_NAME");
+        address = getIntent().getStringExtra("ROOM_ADDRESS");
+        people = getIntent().getStringExtra("ROOM_PEOPLE");
+        money = getIntent().getStringExtra("ROOM_MONEY");
+        checkIn = getIntent().getStringExtra("ROOM_CHECK_IN");
+        checkOut = getIntent().getStringExtra("ROOM_CHECK_OUT");
+        roomItem = getIntent().getStringExtra("ROOM_PATH");
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(people) || TextUtils.isEmpty(money) || TextUtils.isEmpty(checkIn) || TextUtils.isEmpty(checkOut) || TextUtils.isEmpty(roomItem)) {
             this.finish();
             return;
         }
+        recyclerView = findViewById(R.id.recyclerView_passRecord);
         textRoomName = findViewById(R.id.textMyRoomName);
         textAddress = findViewById(R.id.textMyRoomAddress);
         textPeople = findViewById(R.id.textMyRoomPeople);
         textMoney = findViewById(R.id.textMyRoomMoney);
         textTime = findViewById(R.id.textMyRoomTime);
+        textVoltage = findViewById(R.id.textMyRoomV);
+        textCurrent = findViewById(R.id.textMyRoomI);
+        textTotalPower = findViewById(R.id.textMyRoomkWh);
 
-        textRoomName.setText(roomName);
-        textAddress.setText(roomAddress);
-        textPeople.setText(roomPeople);
-        textMoney.setText(roomMoney);
-        textTime.setText(roomCheckIn +" ~ "+ roomCheckOut);
+        textRoomName.setText(name);
+        textAddress.setText(address);
+        textPeople.setText(people);
+        textMoney.setText(money);
+        textTime.setText(checkIn + " ~ " + checkOut);
         chaosWithBluetooth = new ChaosWithBluetooth(this);
         chaosWithBluetooth.getInstance();
+    }
+
+    DatabaseReference powerListener;
+    ChildEventListener powerValListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            if (dataSnapshot.getValue() != null) {
+                JavaBeanPower data = dataSnapshot.getValue(JavaBeanPower.class);
+                textCurrent.setText(data.getCurrent());
+                textVoltage.setText(data.getVoltage());
+                textTotalPower.setText(data.getTotalPower());
+            }
+        }
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            if (dataSnapshot.getValue() != null) {
+                JavaBeanPower data = dataSnapshot.getValue(JavaBeanPower.class);
+                textCurrent.setText(data.getCurrent());
+                textVoltage.setText(data.getVoltage());
+                textTotalPower.setText(data.getTotalPower());
+            }
+        }
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+        }
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+    Query query;
+    ChildEventListener queryListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Log.d("onChildAdded: ",dataSnapshot.getValue().toString());
+            JavaBeanMyRoom data = dataSnapshot.getValue(JavaBeanMyRoom.class);
+            powerListener = FirebaseDatabase.getInstance().getReference("scadaSystem");
+            powerListener.orderByChild("room").equalTo(data.getRoom()).addChildEventListener(powerValListener);
+            RecyclerFunctionPassRecord adapter = new RecyclerFunctionPassRecord(MyRoom.this,recyclerView,FirebaseAuth.getInstance().getUid(), data.getRoom());
+        }
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+        }
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+    @Override
+    protected void onStart() {
+        super.onStart();
+        query = FirebaseDatabase.getInstance().getReference("userList").child(FirebaseAuth.getInstance().getUid()).child("myRoomList");
+        query.orderByChild("name").equalTo(name).addChildEventListener(queryListener);
     }
 
     public void netWorkCheck() {
@@ -150,28 +234,43 @@ public class MyRoom extends AppCompatActivity {
             startActivity(intent);
         }
     }
+
     ImageView mQRCodeImg;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if( 0==requestCode && null!=data && data.getExtras()!=null ) {
+        if (0 == requestCode && null != data && data.getExtras() != null) {
             //掃描結果存放在 key 為 la.droid.qr.result 的值中
-            String result = data.getExtras().getString("la.droid.qr.result");
-            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy年MM月dd日");
+            final String result = data.getExtras().getString("la.droid.qr.result");
+
+            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy/MM/dd");
             Long stayDay = null;
+            Long unixIn = null, unixOut = null;
             try {
-                Long checkIn = timeFormat.parse(roomCheckIn).getTime();
-                Long checkOut = timeFormat.parse(roomCheckOut).getTime();
-                stayDay = (checkOut-checkIn)/(1000*60*60*24);
+                unixIn = timeFormat.parse(checkIn).getTime();
+                unixOut = timeFormat.parse(checkOut).getTime();
+                stayDay = (unixOut - unixIn) / (1000 * 60 * 60 * 24);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            if (stayDay==null) {
+            if (stayDay == null) {
                 new AlertDialog.Builder(MyRoom.this).setMessage("失敗").show();
                 return;
             }
-            JavaBeanMyRoom roomData = new JavaBeanMyRoom(roomCheckIn,String.valueOf(stayDay),roomAddress,roomName,roomMoney,roomPeople);
-            new ShareRoomPermission(MyRoom.this,FirebaseAuth.getInstance().getUid(),result,roomData);
+            FirebaseDatabase.getInstance().getReference("userList").child(FirebaseAuth.getInstance().getUid()).child("myRoomList").child(roomItem)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            Log.d("share", dataSnapshot.getValue().toString());
+                            JavaBeanMyRoom data = dataSnapshot.getValue(JavaBeanMyRoom.class);
+                            new ShareRoomPermission(MyRoom.this, FirebaseAuth.getInstance().getUid(), result, data);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) { }
+                    });
+//            JavaBeanMyRoom roomData = new JavaBeanMyRoom(unixIn,unixOut,name,room,money,people);
+//            new ShareRoomPermission(MyRoom.this,FirebaseAuth.getInstance().getUid(),result,roomData);
 //                Log.d("TEST",result);
 //                TextView a = findViewById(R.id.textView);
 //                a.setText(result);  //將結果顯示在 TextVeiw 中
@@ -182,9 +281,12 @@ public class MyRoom extends AppCompatActivity {
 //            startActivity(shareToPage);
         }
     }
+
     @Override
     protected void onStop() {
         super.onStop();
         chaosWithBluetooth.setSocketNull();
+        powerListener.removeEventListener(powerValListener);
+        query.removeEventListener(queryListener);
     }
 }

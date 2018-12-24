@@ -1,20 +1,22 @@
 package com.example.user1801.onlinemotel.recyclerDesign;
 
-public class JavaBeanAllRoomList {
+public class JavaBeanRoomPath {
     String address;
     String name;
     String money;
     String people;
+    String path;
 
-    public JavaBeanAllRoomList() {
+    public JavaBeanRoomPath() {
         super();
     }
 
-    public JavaBeanAllRoomList(String address, String name, String money, String people) {
+    public JavaBeanRoomPath(String address, String name, String money, String people, String path) {
         this.address = address;
         this.name = name;
         this.money = money;
         this.people = people;
+        this.path = path;
     }
 
     public String getAddress() {
@@ -47,5 +49,13 @@ public class JavaBeanAllRoomList {
 
     public void setPeople(String people) {
         this.people = people;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }

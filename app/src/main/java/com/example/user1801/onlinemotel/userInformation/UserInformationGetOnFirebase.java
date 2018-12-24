@@ -24,14 +24,14 @@ public class UserInformationGetOnFirebase {
         this.txEmail = txEmail;
         this.txPhone = txPhone;
         this.txAddress = txAddress;
-        databaseReference = FirebaseDatabase.getInstance().getReference("userList").child(firebaseUid).child("information");
+        databaseReference = FirebaseDatabase.getInstance().getReference("userList").child(firebaseUid);
 //        databaseReference.addChildEventListener();
     }
 
     public void updataNewInformation(String item, String value){
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put(item,value);
-        databaseReference.child("personData").updateChildren(hashMap);
+        databaseReference.updateChildren(hashMap);
     }
 
     public void addListenter() {
@@ -45,12 +45,13 @@ public class UserInformationGetOnFirebase {
     private ChildEventListener listener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            getData(dataSnapshot);
+//            JavaBeanSetPerson data = dataSnapshot.getValue(JavaBeanSetPerson.class);
+            getData(dataSnapshot,s);
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            getData(dataSnapshot);
+            getData(dataSnapshot,s);
         }
 
         @Override
@@ -69,14 +70,29 @@ public class UserInformationGetOnFirebase {
         }
     };
 
-    private void getData(DataSnapshot dataSnapshot) {
-        Log.d("TEST",dataSnapshot.getValue().toString());
-        JavaBeanSetPerson data = dataSnapshot.getValue(JavaBeanSetPerson.class);
-        if (!TextUtils.isEmpty(data.name)) {
-        txName.setText(data.name);
-        txEmail.setText(data.email);
-        txPhone.setText(data.phone);
-        txAddress.setText(data.address);
+    private void getData(DataSnapshot dataSnapshot, String s) {
+        Log.d("TEST123",dataSnapshot.getValue().toString() + s);
+//        JavaBeanSetPerson data = dataSnapshot.getValue(JavaBeanSetPerson.class);
+//        if (!TextUtils.isEmpty(data.name)) {
+        if(TextUtils.isEmpty(s)){
+            txAddress.setText(dataSnapshot.getValue().toString());
+        }else {
+            switch (s) {
+                case "myRoomList":
+                    txName.setText(dataSnapshot.getValue().toString());
+                    break;
+                case "address":
+                    txEmail.setText(dataSnapshot.getValue().toString());
+                    break;
+                case "name":
+                    txPhone.setText(dataSnapshot.getValue().toString());
+                    break;
+            }
         }
+//        }
     }
 }
+
+
+
+

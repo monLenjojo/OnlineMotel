@@ -1,10 +1,10 @@
 package com.example.user1801.onlinemotel;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -153,7 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (task.isComplete()) {
                     if (task.isSuccessful()) {
                         Uid = auth.getCurrentUser().getUid();
-                        FirebaseDatabase.getInstance().getReference("userList").child(Uid).child("information").child("personData").setValue(JavaBeanSetPerson);
+                        FirebaseDatabase.getInstance().getReference("userList").child(Uid).setValue(JavaBeanSetPerson);
                         new AlertDialog.Builder(RegisterActivity.this).setMessage(JavaBeanSetPerson.getName() + " ,新帳號註冊成功囉\n自動轉換頁面中..").setPositiveButton("OK", null).show();
                         Log.d("CreateUser", "Uid：" + Uid);
                         RegisterActivity.this.finish();

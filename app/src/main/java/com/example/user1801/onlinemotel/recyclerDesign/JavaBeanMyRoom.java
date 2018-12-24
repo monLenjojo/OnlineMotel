@@ -1,22 +1,25 @@
 package com.example.user1801.onlinemotel.recyclerDesign;
-public class JavaBeanMyRoom{
+//"98:D3:31:FB:19:CE"
+public class JavaBeanMyRoom {
     String checkIn;
-    String stay;
-    String where;
-    String roomNmae;
-    String money;
-    String people;
+    String checkOut;
+    String name;
+    String room;
+    String roomKey;
+    String chaosKey;
+    String macAddress;
 
     public JavaBeanMyRoom() {
     }
 
-    public JavaBeanMyRoom(String checkIn, String stay, String where, String roomNmae, String money, String people) {
+    public JavaBeanMyRoom(String checkIn, String checkOut, String name, String room, String roomKey, String chaosKey, String macAddress) {
         this.checkIn = checkIn;
-        this.stay = stay;
-        this.where = where;
-        this.roomNmae = roomNmae;
-        this.money = money;
-        this.people = people;
+        this.checkOut = checkOut;
+        this.name = name;
+        this.room = room;
+        this.roomKey = roomKey;
+        this.chaosKey = chaosKey;
+        this.macAddress = macAddress;
     }
 
     public String getCheckIn() {
@@ -27,43 +30,51 @@ public class JavaBeanMyRoom{
         this.checkIn = checkIn;
     }
 
-    public String getStay() {
-        return stay;
+    public String getCheckOut() {
+        return checkOut;
     }
 
-    public void setStay(String stay) {
-        this.stay = stay;
+    public void setCheckOut(String checkOut) {
+        this.checkOut = checkOut;
     }
 
-    public String getWhere() {
-        return where;
+    public String getName() {
+        return name;
     }
 
-    public void setWhere(String where) {
-        this.where = where;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getRoomNmae() {
-        return roomNmae;
+    public String getRoom() {
+        return room;
     }
 
-    public void setRoomNmae(String roomNmae) {
-        this.roomNmae = roomNmae;
+    public void setRoom(String room) {
+        this.room = room;
     }
 
-    public String getMoney() {
-        return money;
+    public String getRoomKey() {
+        return roomKey;
     }
 
-    public void setMoney(String money) {
-        this.money = money;
+    public void setRoomKey(String roomKey) {
+        this.roomKey = roomKey;
     }
 
-    public String getPeople() {
-        return people;
+    public String getChaosKey() {
+        return chaosKey;
     }
 
-    public void setPeople(String people) {
-        this.people = people;
+    public void setChaosKey(String chaosKey) {
+        this.chaosKey = chaosKey;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
+    }
+
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
     }
 }

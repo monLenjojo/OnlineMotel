@@ -1,16 +1,16 @@
-package com.example.user1801.onlinemotel.chaosThing;
+package com.example.user1801.onlinemotel.firebaseThing;
 
-public class JavaBeanRoomKey {
+public class JavaBeanKey {
     String chaosKey;
     String macAddress;
-    String room;
-    public JavaBeanRoomKey() {
+
+    public JavaBeanKey() {
+        super();
     }
 
-    public JavaBeanRoomKey(String chaosKey, String macAddress, String room) {
+    public JavaBeanKey(String chaosKey, String macAddress) {
         this.chaosKey = chaosKey;
         this.macAddress = macAddress;
-        this.room = room;
     }
 
     public String getChaosKey() {
@@ -27,13 +27,5 @@ public class JavaBeanRoomKey {
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
     }
 }

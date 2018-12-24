@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.user1801.onlinemotel.bluetoothChaos.BluetoothTest;
+import com.example.user1801.onlinemotel.firebaseThing.JavaBeanKey;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -71,33 +72,33 @@ public class ChaosWithBluetooth {
             }
         }
     }
-    public void unlock(final String roomName){
+    public void unlock(final String itemNum){
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getOnFirebaseKey(roomName);
+                getOnFirebaseKey(itemNum);
             }
         }).start();
     }
-    public void getOnFirebaseKey(String roomName){
-        DatabaseReference keyQuery = FirebaseDatabase.getInstance().getReference("userList").child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("myRoomList").child(roomName).child("myRoomKey");
-        final JavaBeanRoomKey[] key = new JavaBeanRoomKey[1];
+    public void getOnFirebaseKey(String itemNum){
+        DatabaseReference keyQuery = FirebaseDatabase.getInstance().getReference("userList").child(FirebaseAuth.getInstance().getUid()).child("myRoomList").child(itemNum);
+        final JavaBeanKey[] key = new JavaBeanKey[1];
         final boolean[] findState = {false};
         keyQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getValue() != null) {
                     Log.d("ChoasWithBluetooth", dataSnapshot.getValue().toString());
-                    key[0] = dataSnapshot.getValue(JavaBeanRoomKey.class);
-                    Log.d("ChoasWithBluetooth", key[0].key);
+                    key[0] = dataSnapshot.getValue(JavaBeanKey.class);
+                    Log.d("ChoasWithBluetooth", key[0].getChaosKey());
                     findState[0] = true;
                     if (isConnect()) {
 //                    runRnlockLoop("-12345/-543.21/21.354","A");
-                        runRnlockLoop(key[0].key, "A");
+                        runRnlockLoop(key[0].getChaosKey(), "A");
                     } else {
-                        if (connect(key[0].macAddress)) {
+                        if (connect(key[0].getMacAddress())) {
 //                        runRnlockLoop("-12345/-543.21/21.354","A");
-                            runRnlockLoop(key[0].key, "A");
+                            runRnlockLoop(key[0].getChaosKey(), "A");
                         }
                     }
                 }

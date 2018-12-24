@@ -37,8 +37,11 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 setTestData a = new setTestData();
-                a.addNewTestDataRoom(0,9,"2500","2");
-                a.addNewTestDataRoom(10,15,"3000","3");
+//                a.addControlDevice();
+                a.addPassRecord();
+//                a.addTestDataRoom(0,15,"2000","2");
+//                a.addNewTestDataRoom(0,9,"2500","2");
+//                a.addNewTestDataRoom(10,15,"3000","3");
 //                a.addNewTestData(11,15,3000,3);
             }
         });

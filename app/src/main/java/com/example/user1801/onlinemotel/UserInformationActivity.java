@@ -28,6 +28,9 @@ import com.example.user1801.onlinemotel.userInformation.UserInformationGetOnFire
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -236,15 +239,14 @@ public class UserInformationActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         ImageView ivCode = (ImageView) findViewById(R.id.mQRCodeImg);
-//                BarcodeEncoder encoder = new BarcodeEncoder();
-//                try {
-//                    Bitmap bit = encoder.encodeBitmap(firebaseUid, BarcodeFormat.QR_CODE,
-//                            250, 250);
-//                    ivCode.setImageBitmap(bit);
-//                } catch (WriterException e) {
-//                    e.printStackTrace();
-//                }
-//        compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+        BarcodeEncoder encoder = new BarcodeEncoder();
+        try {
+            Bitmap bit = encoder.encodeBitmap( FirebaseAuth.getInstance().getCurrentUser().getUid(), BarcodeFormat.QR_CODE,
+                    250, 250);
+            ivCode.setImageBitmap(bit);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setViewListener() {

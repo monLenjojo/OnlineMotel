@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class RecyclerFunctionHomePage {
-    ArrayList<JavaBeanAllRoomList> arrayList = new ArrayList<JavaBeanAllRoomList>();
+    ArrayList<JavaBeanRoomPath> arrayList = new ArrayList<JavaBeanRoomPath>();
     RecyclerView recyclerHomeView;
     DatabaseReference data;
     Context context;
@@ -30,22 +30,24 @@ public class RecyclerFunctionHomePage {
         data.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Log.d("TEST", dataSnapshot.getValue().toString());
-                JavaBeanAllRoomList data = dataSnapshot.getValue(JavaBeanAllRoomList.class);
+                Log.d("RecyclerTEST", dataSnapshot.getKey().toString());
+                JavaBeanAllRoomList val = dataSnapshot.getValue(JavaBeanAllRoomList.class);
+                JavaBeanRoomPath data  = new JavaBeanRoomPath(val.address,val.name,val.money,val.people,dataSnapshot.getKey());
                 arrayList.add(data);
-                Log.d("TEST", data.roomName);
+//                Log.d("TEST", data.name);
                 upData();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Log.d("TEST",dataSnapshot.getValue().toString());
-                JavaBeanAllRoomList data = dataSnapshot.getValue(JavaBeanAllRoomList.class);
+                JavaBeanAllRoomList val = dataSnapshot.getValue(JavaBeanAllRoomList.class);
+                JavaBeanRoomPath data  = new JavaBeanRoomPath(val.address,val.name,val.money,val.people,dataSnapshot.getKey());
                 if (s==null) {
-                    Log.d("TEST", arrayList.get(0).roomName+" ,"+null);
+                    Log.d("TEST", arrayList.get(0).name+" ,"+null);
                     arrayList.set(0,data);
                 }else {
-                    Log.d("TEST", arrayList.get(1+Integer.parseInt(s)).roomName + " ," + (1+Integer.parseInt(s)));
+                    Log.d("TEST", arrayList.get(1+Integer.parseInt(s)).name + " ," + (1+Integer.parseInt(s)));
                     arrayList.set((1+Integer.parseInt(s)),data);
                 }
             }

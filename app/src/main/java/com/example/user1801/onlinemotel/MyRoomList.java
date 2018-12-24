@@ -48,12 +48,15 @@ public class MyRoomList extends AppCompatActivity {
                 Intent page = new Intent(this,MainActivity.class);
                 startActivity(page);
                 MyRoomList.this.finish();
+                break;
 //            case R.id.action_share:
 ////                Intent page = new Intent(this,MyRoomList.class);
 ////                startActivity(page);
 ////                MyRoomList.this.finish();
 //                break;
             case R.id.action_account:
+                Intent pageAccount = new Intent(this,UserInformationActivity.class);
+                startActivity(pageAccount);
                 break;
             case R.id.action_logout:
                 auth.signOut();
