@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.example.user1801.onlinemotel.bluetoothChaos.BluetoothTest;
 import com.example.user1801.onlinemotel.chaosThing.ChaosMath;
 import com.example.user1801.onlinemotel.chaosThing.ChaosWithBluetooth;
 import com.example.user1801.onlinemotel.firebaseThing.JavaBeanPower;
+import com.example.user1801.onlinemotel.firebaseThing.JavaBeanRoomControlDevice;
 import com.example.user1801.onlinemotel.firebaseThing.ShareRoomPermission;
 import com.example.user1801.onlinemotel.recyclerDesign.JavaBeanMyRoom;
 import com.example.user1801.onlinemotel.recyclerDesign.RecyclerAdapterPassRecord;
@@ -85,12 +87,13 @@ public class MyRoom extends AppCompatActivity {
     };
 
     TextView textRoomName, textAddress, textPeople, textMoney, textTime, textVoltage, textCurrent, textTotalPower;
-
+    ImageButton imgButtonFan,imgButtonLamp;
+    boolean fanState , lampState;
     private ChaosWithBluetooth chaosWithBluetooth;
 
     String name, roomItem, address, people, money, checkIn, checkOut;
     RecyclerView recyclerView;
-    private String roomId;
+    private String roomId,roomControlId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +122,8 @@ public class MyRoom extends AppCompatActivity {
         textVoltage = findViewById(R.id.textMyRoomV);
         textCurrent = findViewById(R.id.textMyRoomI);
         textTotalPower = findViewById(R.id.textMyRoomkWh);
+        imgButtonFan = findViewById(R.id.imageButtonFan);
+        imgButtonLamp = findViewById(R.id.imageButtonLamp);
 
         textRoomName.setText(name);
         textAddress.setText(address);
@@ -159,7 +164,58 @@ public class MyRoom extends AppCompatActivity {
         public void onCancelled(@NonNull DatabaseError databaseError) {
         }
     };
-    Query query;
+    ChildEventListener controlValListener = new ChildEventListener() {
+        @Override
+        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            Log.d("onChildAdded: ",dataSnapshot.getKey());
+            roomControlId = dataSnapshot.getKey();
+            if (dataSnapshot.getValue() != null) {
+                JavaBeanRoomControlDevice data = dataSnapshot.getValue(JavaBeanRoomControlDevice.class);
+                fanState = data.isFanState();
+                lampState = data.isLampState();
+                if (fanState) {
+
+                    imgButtonFan.setImageDrawable(getResources().getDrawable(R.drawable.fan_on));
+                }else {
+                    imgButtonFan.setImageDrawable(getResources().getDrawable(R.drawable.fan_off));
+                }
+                if (lampState) {
+                    imgButtonLamp.setImageDrawable(getResources().getDrawable(R.drawable.lamp_on));
+                }else {
+                    imgButtonLamp.setImageDrawable(getResources().getDrawable(R.drawable.lamp_off));
+                }
+            }
+        }
+        @Override
+        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            if (dataSnapshot.getValue() != null) {
+                JavaBeanRoomControlDevice data = dataSnapshot.getValue(JavaBeanRoomControlDevice.class);
+                fanState = data.isFanState();
+                lampState = data.isLampState();
+                if (fanState) {
+
+                    imgButtonFan.setImageDrawable(getResources().getDrawable(R.drawable.fan_on));
+                }else {
+                    imgButtonFan.setImageDrawable(getResources().getDrawable(R.drawable.fan_off));
+                }
+                if (lampState) {
+                    imgButtonLamp.setImageDrawable(getResources().getDrawable(R.drawable.lamp_on));
+                }else {
+                    imgButtonLamp.setImageDrawable(getResources().getDrawable(R.drawable.lamp_off));
+                }
+            }
+        }
+        @Override
+        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+        }
+        @Override
+        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+        }
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+    Query query ,controlListener;
     ChildEventListener queryListener = new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -167,7 +223,9 @@ public class MyRoom extends AppCompatActivity {
             JavaBeanMyRoom data = dataSnapshot.getValue(JavaBeanMyRoom.class);
             powerListener = FirebaseDatabase.getInstance().getReference("scadaSystem");
             powerListener.orderByChild("room").equalTo(data.getRoom()).addChildEventListener(powerValListener);
-            RecyclerFunctionPassRecord adapter = new RecyclerFunctionPassRecord(MyRoom.this,recyclerView,FirebaseAuth.getInstance().getUid(), data.getRoom());
+            controlListener = FirebaseDatabase.getInstance().getReference("allRoomControlDevice");
+            controlListener.orderByChild("room").equalTo(data.getRoom()).addChildEventListener(controlValListener);
+            new RecyclerFunctionPassRecord(MyRoom.this,recyclerView,FirebaseAuth.getInstance().getUid(), data.getRoom());
         }
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -288,5 +346,22 @@ public class MyRoom extends AppCompatActivity {
         chaosWithBluetooth.setSocketNull();
         powerListener.removeEventListener(powerValListener);
         query.removeEventListener(queryListener);
+        controlListener.removeEventListener(controlValListener);
+    }
+
+
+    public void clickFan(View view) {
+        if (fanState) {
+            FirebaseDatabase.getInstance().getReference("allRoomControlDevice").child(roomControlId).child("fanState").setValue(false);
+        }else {
+            FirebaseDatabase.getInstance().getReference("allRoomControlDevice").child(roomControlId).child("fanState").setValue(true);
+        }
+    }
+    public void clickLamp(View view){
+        if (lampState) {
+            FirebaseDatabase.getInstance().getReference("allRoomControlDevice").child(roomControlId).child("lampState").setValue(false);
+        }else{
+            FirebaseDatabase.getInstance().getReference("allRoomControlDevice").child(roomControlId).child("lampState").setValue(true);
+        }
     }
 }

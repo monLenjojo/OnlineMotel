@@ -81,8 +81,6 @@ public class setTestData {
                             false,
                             false,
                             false,
-                            false,
-                            false,
                             false);
                     controlDevice.push().setValue(data);
                 }
@@ -102,8 +100,8 @@ public class setTestData {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     Log.d("onDataChange:", child.getKey());
-                    JavaBeanPassRecord data = new JavaBeanPassRecord("", "", child.getKey());
-                    passRecord.push().setValue(data);
+                    JavaBeanPassRecord data = new JavaBeanPassRecord("", "");
+                    passRecord.child(child.getKey()).push().setValue(data);
                 }
             }
 

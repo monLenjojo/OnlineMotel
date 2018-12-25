@@ -20,14 +20,14 @@ public class RecyclerFunctionPassRecord {
     ArrayList<JavaBeanPassRecord> arrayList = new ArrayList<>();
     RecyclerView recyclerView;
     Context context;
-    Query reference;
+    DatabaseReference reference;
     String firebaseId;
 
     public RecyclerFunctionPassRecord(Context context, RecyclerView recyclerView, String firebaseId,String room) {
         this.recyclerView = recyclerView;
         this.context = context;
         this.firebaseId = firebaseId;
-        reference = FirebaseDatabase.getInstance().getReference("passRecordList").orderByChild("room").equalTo(room);
+        reference = FirebaseDatabase.getInstance().getReference("passRecordList").child(room);
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

@@ -51,7 +51,7 @@ public class RecyclerAdapterPassRecord extends RecyclerView.Adapter<RecyclerAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    new AlertDialog.Builder(context).setMessage(arrayList.get(getAdapterPosition()).room).show();
+//                    new AlertDialog.Builder(context).setMessage(arrayList.get(getAdapterPosition()).room).show();
                 }
             });
         }

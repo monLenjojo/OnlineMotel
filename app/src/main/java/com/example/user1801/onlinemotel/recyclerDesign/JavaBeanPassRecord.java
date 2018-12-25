@@ -3,16 +3,14 @@ package com.example.user1801.onlinemotel.recyclerDesign;
 public class JavaBeanPassRecord {
     String time;
     String name;
-    String room;
 
     public JavaBeanPassRecord() {
         super();
     }
 
-    public JavaBeanPassRecord(String time, String name, String room) {
+    public JavaBeanPassRecord(String time, String name) {
         this.time = time;
         this.name = name;
-        this.room = room;
     }
 
     public String getTime() {
@@ -29,13 +27,5 @@ public class JavaBeanPassRecord {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public void setRoom(String room) {
-        this.room = room;
     }
 }

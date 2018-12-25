@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
                 setTestData a = new setTestData();
 //                a.addControlDevice();
-                a.addPassRecord();
+                a.addControlDevice();
 //                a.addTestDataRoom(0,15,"2000","2");
 //                a.addNewTestDataRoom(0,9,"2500","2");
 //                a.addNewTestDataRoom(10,15,"3000","3");

@@ -257,6 +257,12 @@ public class UserInformationActivity extends AppCompatActivity {
         imageView.setOnClickListener(clickListener);
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        setData.removeListenter();
+    }
+
     private void findView() {
         show_Name = findViewById(R.id.ed_Name);
         show_Phone = findViewById(R.id.ed_Phone);

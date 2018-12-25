@@ -7,21 +7,17 @@ public class JavaBeanRoomControlDevice {
     boolean lightState;
     boolean chaosLockState;
     boolean lockOpenState;
-    boolean bluetoothConnectState;
-    boolean buzzerOnState;
 
     public JavaBeanRoomControlDevice() {
     }
 
-    public JavaBeanRoomControlDevice(String room, boolean fanState, boolean lampState, boolean lightState, boolean chaosLockState, boolean lockOpenState, boolean bluetoothConnectState, boolean buzzerOnState) {
+    public JavaBeanRoomControlDevice(String room, boolean fanState, boolean lampState, boolean lightState, boolean chaosLockState, boolean lockOpenState) {
         this.room = room;
         this.fanState = fanState;
         this.lampState = lampState;
         this.lightState = lightState;
         this.chaosLockState = chaosLockState;
         this.lockOpenState = lockOpenState;
-        this.bluetoothConnectState = bluetoothConnectState;
-        this.buzzerOnState = buzzerOnState;
     }
 
     public String getRoom() {
@@ -70,21 +66,5 @@ public class JavaBeanRoomControlDevice {
 
     public void setLockOpenState(boolean lockOpenState) {
         this.lockOpenState = lockOpenState;
-    }
-
-    public boolean isBluetoothConnectState() {
-        return bluetoothConnectState;
-    }
-
-    public void setBluetoothConnectState(boolean bluetoothConnectState) {
-        this.bluetoothConnectState = bluetoothConnectState;
-    }
-
-    public boolean isBuzzerOnState() {
-        return buzzerOnState;
-    }
-
-    public void setBuzzerOnState(boolean buzzerOnState) {
-        this.buzzerOnState = buzzerOnState;
     }
 }
